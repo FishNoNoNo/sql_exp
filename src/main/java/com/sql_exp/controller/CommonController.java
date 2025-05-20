@@ -1,9 +1,16 @@
 package com.sql_exp.controller;
 
 import com.sql_exp.pojo.Result;
+import com.sql_exp.pojo.obj.Manager;
+import com.sql_exp.pojo.obj.Room;
+import com.sql_exp.pojo.obj.User;
 import com.sql_exp.pojo.req.BookInfo;
+import com.sql_exp.pojo.req.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -12,14 +19,59 @@ public class CommonController {
 //    private CommonService commonService;
 
     @PostMapping("/bookRoom")
-    public Result bookRoom(@RequestBody BookInfo bookInfo){
+    public Result bookRoom(@RequestBody BookInfo bookInfo) {
         System.out.println(bookInfo);
-        return Result.success(1);
+        return Result.success();
     }
 
-    @GetMapping("/checkin")
-    public Result checkin(String roomId,String userId){
-        System.out.println(roomId+"\n"+userId);
-        return Result.success(1);
+    @PutMapping("/checkin")
+    public Result checkin(@RequestBody Check check) {
+        String roomId = check.getRoomId();
+        String userId = check.getUserId();
+        System.out.println(roomId + "\n" + userId);
+        return Result.success();
     }
+
+    @PutMapping("/checkout")
+    public Result checkout(@RequestBody Check check) {
+        String roomId = check.getRoomId();
+        String userId = check.getUserId();
+        System.out.println(roomId + "\n" + userId);
+        return Result.success();
+    }
+
+    @GetMapping("/roomList")
+    public Result roomList(@RequestParam(required = false) Integer permission,
+                           @RequestParam(required = false) Integer status,
+                           @RequestParam(required = false) String type,
+                           @RequestParam(required = false) Integer page,
+                           @RequestParam(required = false) Integer pageSize) {
+        System.out.println(permission + "\n" + status + "\n" + type + "\n" + page + "\n" + pageSize);
+        List<Room> roomList = new ArrayList<>();
+        roomList.add(new Room("101", "大床房", 100.0, (byte) 0));
+        roomList.add(new Room("102", "大床房", 100.0, (byte) 1));
+        roomList.add(new Room("103", "大床房", 100.0, (byte) 2));
+        roomList.add(new Room("104", "大床房", 100.0, (byte) 3));
+
+        return Result.success(roomList);
+    }
+
+    @GetMapping("/userList")
+    public Result userList(@RequestParam(required = false) Integer status, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
+        System.out.println(status + "\n" + page + "\n" + pageSize);
+        List<User> userList = new ArrayList<>();
+        userList.add(new User(1, "李四", "136......", (byte) 1, "101"));
+        userList.add(new User(2, "李四", "136......", (byte) 2, "102"));
+        userList.add(new User(3, "李四", "136......", (byte) 1, "103"));
+        userList.add(new User(4, "李四", "136......", (byte) 2, "104"));
+
+        return Result.success(userList);
+    }
+
+    @GetMapping("/getManager")
+    public Result getManager(String id) {
+        Manager manager = new Manager("1", "张三", "136......", (byte) 0);
+        return Result.success(manager);
+    }
+
 }
