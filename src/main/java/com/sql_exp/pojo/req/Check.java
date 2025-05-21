@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Check {
+    private Integer managerId;
     private String roomId;
-    private String userId;
+    private Integer userId;
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sql_exp.mapper.UserMapper">
+
+    <select id="selectUsers" resultType="com.sql_exp.pojo.obj.User">
+        SELECT r.id,r.name,r.phone,r.status,s.room_id
+        FROM exp_user r LEFT JOIN
+            exp_user_room s ON r.id=s.user_id
+        <where>
+            <if test="status != null">
+                AND r.status = #{status}
+            </if>
+        </where>
+        ORDER BY r.status
+        <if test="start != null and pageSize!=null">
+            LIMIT #{start}, #{pageSize}
+        </if>
+    </select>
+</mapper>

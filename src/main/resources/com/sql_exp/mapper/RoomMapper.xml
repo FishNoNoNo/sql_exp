@@ -24,6 +24,27 @@
                 AND type LIKE CONCAT('%', #{type}, '%')
             </if>
         </where>
-        LIMIT #{page}, #{pageSize}
+        ORDER BY status
+        <if test="start != null and pageSize!=null">
+            LIMIT #{start}, #{pageSize}
+        </if>
+    </select>
+    <select id="getAllRoomList" resultType="com.sql_exp.pojo.obj.Room">
+        SELECT *
+        FROM exp_room
+        <where>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+
+            <if test="type != null and type != ''">
+                AND type LIKE CONCAT('%', #{type}, '%')
+            </if>
+        </where>
+        ORDER BY status
+        <if test="start != null and pageSize!=null">
+            LIMIT #{start}, #{pageSize}
+        </if>
+
     </select>
 </mapper>

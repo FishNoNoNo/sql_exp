@@ -13,4 +13,9 @@ public class User {
     private String phone;
     private byte status;
     private String roomId;
+
+    public User(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
 }
